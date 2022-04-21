@@ -20,7 +20,7 @@ class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From first station'; 5; 0; 0",
+                    "'From first station'; 6; 0; 0",
                     "'Last station'; 15; 15; 15",
                     "'More maximum station'; 5; 7; 0",
                     "'Less minimum station'; 5; -1; 0"
