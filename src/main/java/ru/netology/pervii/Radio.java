@@ -4,8 +4,8 @@ public class Radio {
 
     private int radioVolume;
 
-    private int maxVolume = 100;
-    private int minVolume = 0;
+    private int maxRadioVolume = 100;
+    private int minRadioVolume = 0;
 
     private int radioStation;
     private int maxRadioStation = 10;
@@ -18,9 +18,9 @@ public class Radio {
     public Radio(int maxRadioStation) {
         this.maxRadioStation = maxRadioStation;
     }
-    //-
+    //--
 
-
+    //Станции+
     public int getMaxRadioStation() {
         return maxRadioStation;
     }
@@ -51,5 +51,27 @@ public class Radio {
             setRadioStation(radioStation - 1);
         }
     }
+    //--
 
+    //Громкость+
+
+    public int getRadioVolume() {
+        return this.radioVolume;
+    }
+
+    public void setRadioVolume(int forwardRadioVolume) {
+        if (forwardRadioVolume > maxRadioVolume || forwardRadioVolume < minRadioVolume) {
+            return;
+        }
+        this.radioVolume = forwardRadioVolume;
+    }
+
+    public void nextVolume() {
+        setRadioVolume(radioVolume + 1);
+    }
+
+    public void prevVolume() {
+        setRadioVolume(radioVolume - 1);
+    }
+    //--
 }

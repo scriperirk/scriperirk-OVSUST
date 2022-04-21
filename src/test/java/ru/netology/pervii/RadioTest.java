@@ -1,87 +1,70 @@
 package ru.netology.pervii;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-    //радиостанции
-    @Test
-    void theStationByRemoteControl() {
-        Radio radio = new Radio();
-        assertEquals(8, radio.theStationByRemoteControl(8));
-    }
 
     @Test
-    void theStationByRemoteControlIfNumberIsWrong() {
-        Radio radio = new Radio();
-        assertEquals(5, radio.theStationByRemoteControl(12));
+    void maxStationTest(){
+        int expected=15;
+        Radio radio=new Radio(expected);
+
+        assertEquals(expected, radio.getMaxRadioStation());
     }
 
-    @Test
-    void theStationByRemoteControlIfNumberIsWrongMinus() {
-        Radio radio = new Radio();
-        assertEquals(5, radio.theStationByRemoteControl(-1));
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From first station'; 5; 0; 0",
+                    "'Last station'; 14; 14; 14",
+                    "'More maximum station'; 5; 7; 0",
+                    "'Less minimum station'; 5; -1; 0"
+            }
+            , delimiter = ';'
+    )
+    void setRadioStationNumberTest(String name, int max, int start, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(start);
+
+        assertEquals(expected, radio.getRadioStation());
     }
 
-    @Test
-    void theStationByButtonNextIfCurrentIsNine() {
-        Radio radio = new Radio();
-        radio.setRadioStation(9);
-        radio.theStationByNextButton();
-        assertEquals(0, radio.getRadioStation());
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From first station'; 5; 0; 1",
+                    "'Go last station'; 5; 4; 5",
+                    "'More maximum station'; 5; 5; 0"
+            }
+            , delimiter = ';'
+    )
+    void NextRadioStationTest(String name, int max, int start, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(start);
+
+        radio.nextRadioStation();
+        assertEquals(expected, radio.getRadioStation());
     }
 
-    @Test
-    void theStationByButtonNext() {
-        Radio radio = new Radio();
-        radio.theStationByNextButton();
-        assertEquals(6, radio.getRadioStation());
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From last station'; 5; 5; 4",
+                    "'Go first station'; 5; 1; 0",
+                    "'Less minimum station'; 5; 0; 5"
+            }
+            , delimiter = ';'
+    )
+    void PrevRadioStationTest(String name, int max, int start, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(start);
+
+        radio.prevRadioStation();
+        assertEquals(expected, radio.getRadioStation());
     }
 
-    @Test
-    void theStationByPrevButtonIfCurrentIsNull() {
-        Radio radio = new Radio();
-        radio.setRadioStation(0);
-        radio.theStationByPrevButton();
-        assertEquals(9, radio.getRadioStation());
-    }
-
-    @Test
-    void theStationByPrevButton() {
-        Radio radio = new Radio();
-        radio.theStationByPrevButton();
-        assertEquals(4, radio.getRadioStation());
-    }
-
-    //громкость
-
-    @Test
-    void increaseVolumeUnderMax() {
-        Radio radio = new Radio();
-        radio.increaseVolume();
-        assertEquals(6, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeAboveMax() {
-        Radio radio = new Radio();
-        radio.setRadioVolume(10);
-        radio.increaseVolume();
-        assertEquals(10, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeUnderMinimum() {
-        Radio radio = new Radio();
-        radio.decreaseVolume();
-        assertEquals(4, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeAboveMinimum() {
-        Radio radio = new Radio();
-        radio.setRadioVolume(0);
-        radio.decreaseVolume();
-        assertEquals(0, radio.getRadioVolume());
-    }
 }
