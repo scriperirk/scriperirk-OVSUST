@@ -19,12 +19,9 @@ public class Radio {
     public Radio(int maxRadioStation,int quaRadioStation) {
         this.maxRadioStation = maxRadioStation;
 
-        if (maxRadioStation - 1 <= 0) {
-            this.quaRadioStation = 1;
-        } else {
+        if (maxRadioStation - 1 >= 0) {
             this.quaRadioStation = maxRadioStation - 1;
         }
-
     }
     //--
 
