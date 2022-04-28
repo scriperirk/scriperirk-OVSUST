@@ -10,13 +10,21 @@ public class Radio {
     private int radioStation;
     private int maxRadioStation = 10;
     private int minRadioStation = 0;
+    private int quaRadioStation = 0;
 
     //конструкторы+
     public Radio() {
     }
 
-    public Radio(int maxRadioStation) {
+    public Radio(int maxRadioStation,int quaRadioStation) {
         this.maxRadioStation = maxRadioStation;
+
+        if (maxRadioStation - 1 <= 0) {
+            this.quaRadioStation = 1;
+        } else {
+            this.quaRadioStation = maxRadioStation - 1;
+        }
+
     }
     //--
 
