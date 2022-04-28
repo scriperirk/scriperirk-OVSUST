@@ -11,8 +11,8 @@ class RadioTest {
     //Станции+
     @Test
     void maxStationTest(){
-        int expected = 14;
-        int quantity = 15;
+        int expected = 15;
+        int quantity = 14;
         Radio radio=new Radio(expected, quantity);
 
         assertEquals(expected, radio.getMaxRadioStation());
