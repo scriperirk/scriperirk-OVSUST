@@ -9,27 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class RadioTest {
 
     //Станции+
-    @Test
-    void maxStationTest(){
-        int expected = 15;
-        int quantity = 14;
-        Radio radio=new Radio(expected, quantity);
-
-        assertEquals(expected, radio.getMaxRadioStation());
-    }
-
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From first station'; 6; 0; 0; 0",
-                    "'Last station'; 15; 15; 15; 15",
-                    "'More maximum station'; 5; 7; 0; 0",
-                    "'Less minimum station'; 5; -1; 0; 0"
+                    "'From first station'; 6; 0; 0",
+                    "'Last station'; 15; 15; 0",
+                    "'More maximum station'; 5; 7; 0",
+                    "'Less minimum station'; 5; -1; 0"
             }
             , delimiter = ';'
     )
-    void setRadioStationNumberTest(String name, int max, int beginning, int expected, int quant) {
-        Radio radio=new Radio(max,quant);
+    void setRadioStationNumberTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         assertEquals(expected, radio.getRadioStation());
@@ -38,14 +29,14 @@ class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From first station'; 5; 0; 1; 0",
-                    "'Go last station'; 5; 4; 5; 5",
-                    "'More maximum station'; 5; 5; 0; 5"
+                    "'From first station'; 5; 0; 1",
+                    "'Go last station'; 5; 4; 4",
+                    "'More maximum station'; 0; 5; 0"
             }
             , delimiter = ';'
     )
-    void NextRadioStationTest(String name, int max, int beginning, int expected, int quant) {
-        Radio radio=new Radio(max,quant);
+    void NextRadioStationTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         radio.nextRadioStation();
@@ -55,14 +46,14 @@ class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From last station'; 5; 5; 4; 4",
-                    "'Go first station'; 5; 1; 0; 0",
-                    "'Less minimum station'; 5; 0; 5; 5"
+                    "'From last station'; 5; 5; 0",
+                    "'Go first station'; 5; 1; 0",
+                    "'Less minimum station'; 5; 0; 0"
             }
             , delimiter = ';'
     )
-    void PrevRadioStationTest(String name, int max, int beginning, int expected, int quant) {
-        Radio radio=new Radio(max,quant);
+    void PrevRadioStationTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         radio.prevRadioStation();
