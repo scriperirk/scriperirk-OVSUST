@@ -26,7 +26,7 @@ public class Radio {
     }
 
     public void setRadioStation(int forwardRadioStation) {
-        if (forwardRadioStation > maxRadioStation - 1 || forwardRadioStation < minRadioStation) {
+        if (forwardRadioStation > maxRadioStation || forwardRadioStation < minRadioStation) {
             return;
         }
         this.radioStation = forwardRadioStation;
