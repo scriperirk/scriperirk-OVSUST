@@ -20,7 +20,7 @@ class RadioTest {
             , delimiter = ';'
     )
     void setRadioStationNumberTest(String name, int max, int beginning, int expected) {
-        Radio radio=new Radio(max-1);
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         assertEquals(expected, radio.getRadioStation());
@@ -36,7 +36,7 @@ class RadioTest {
             , delimiter = ';'
     )
     void NextRadioStationTest(String name, int max, int beginning, int expected) {
-        Radio radio=new Radio(max-1);
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         radio.nextRadioStation();
@@ -53,7 +53,7 @@ class RadioTest {
             , delimiter = ';'
     )
     void PrevRadioStationTest(String name, int max, int beginning, int expected) {
-        Radio radio=new Radio(max-1);
+        Radio radio=new Radio(max);
         radio.setRadioStation(beginning);
 
         radio.prevRadioStation();

@@ -20,41 +20,28 @@ public class Radio {
     }
     //--
 
-    //Станции+
+    //Станции GET
     public int getRadioStation() {
         return this.radioStation;
     }
 
+    //Громкость GET
+    public int getRadioVolume() {
+        return this.radioVolume;
+    }
+
+    //Станции SET
     public void setRadioStation(int forwardRadioStation) {
-        if (forwardRadioStation > maxRadioStation || forwardRadioStation < minRadioStation) {
+        if (forwardRadioStation < 0) {
+            return;
+        }
+        if (forwardRadioStation > maxRadioStation - 1) {
             return;
         }
         this.radioStation = forwardRadioStation;
     }
 
-    public void nextRadioStation() {
-        if (radioStation == maxRadioStation) {
-            setRadioStation(minRadioStation);
-        } else {
-            setRadioStation(radioStation + 1);
-        }
-    }
-
-    public void prevRadioStation() {
-        if (radioStation == minRadioStation) {
-            setRadioStation(maxRadioStation);
-        } else {
-            setRadioStation(radioStation - 1);
-        }
-    }
-    //--
-
-    //Громкость+
-
-    public int getRadioVolume() {
-        return this.radioVolume;
-    }
-
+    //Громкость SET
     public void setRadioVolume(int forwardRadioVolume) {
         if (forwardRadioVolume > maxRadioVolume || forwardRadioVolume < minRadioVolume) {
             return;
@@ -62,6 +49,25 @@ public class Radio {
         this.radioVolume = forwardRadioVolume;
     }
 
+    //Станции+
+    public void nextRadioStation() {
+        if (radioStation >= maxRadioStation - 1) {
+            radioStation = 0;
+            return;
+        }
+        setRadioStation(radioStation + 1);
+    }
+
+    public void prevRadioStation() {
+        if (radioStation <= 0) {
+            this.radioStation = maxRadioStation - 1;
+            return;
+        }
+        this.radioStation = radioStation - 1;
+    }
+    //--
+
+    //Громкость+
     public void nextVolume() {
         setRadioVolume(radioVolume + 1);
     }
