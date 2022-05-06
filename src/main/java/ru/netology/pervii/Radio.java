@@ -2,70 +2,78 @@ package ru.netology.pervii;
 
 public class Radio {
 
-    private int radioVolume = 5;
-    int maxVolume = 10;
-    int minVolume = 0;
-    private int radioStation = 5;
-    int maxRadioStation = 9;
-    int minRadioStation = 0;
+    private int radioVolume;
 
-    //Станция
+    private int maxRadioVolume = 100;
+    private int minRadioVolume = 0;
+
+    private int radioStation;
+    private int maxRadioStation = 10;
+    private int minRadioStation = 0;
+
+    //конструкторы+
+    public Radio() {
+    }
+
+    public Radio(int maxRadioStation) {
+        this.maxRadioStation = maxRadioStation;
+    }
+    //--
+
+    //Станции GET
     public int getRadioStation() {
-        return radioStation;
+        return this.radioStation;
     }
 
-    public void setRadioStation(int radioStation) {
-        this.radioStation = radioStation;
-    }
-
-    public int theStationByRemoteControl(int intendedStation) {
-        if (intendedStation <= 9 && intendedStation >= 0) {
-            radioStation = intendedStation;
-        }
-
-        return radioStation;
-    }
-
-
-    public void theStationByNextButton() {
-        if (radioStation == maxRadioStation) {
-            radioStation = 0;
-        } else {
-            radioStation += 1;
-        }
-    }
-
-    public void theStationByPrevButton() {
-        if (radioStation == minRadioStation) {
-            radioStation = 9;
-        } else {
-            radioStation -= 1;
-        }
-    }
-
-    //Громкость
+    //Громкость GET
     public int getRadioVolume() {
-        return radioVolume;
+        return this.radioVolume;
     }
 
-    public void setRadioVolume(int radioVolume) {
-        this.radioVolume = radioVolume;
-    }
-
-    public void increaseVolume() {
-        if (radioVolume == maxVolume) {
+    //Станции SET
+    public void setRadioStation(int forwardRadioStation) {
+        if (forwardRadioStation < 0) {
             return;
-        } else {
-            radioVolume += 1;
         }
-    }
-
-    public void decreaseVolume() {
-        if (radioVolume == minVolume) {
+        if (forwardRadioStation > maxRadioStation - 1) {
             return;
-        } else {
-            radioVolume -= 1;
-
         }
+        this.radioStation = forwardRadioStation;
     }
+
+    //Громкость SET
+    public void setRadioVolume(int forwardRadioVolume) {
+        if (forwardRadioVolume > maxRadioVolume || forwardRadioVolume < minRadioVolume) {
+            return;
+        }
+        this.radioVolume = forwardRadioVolume;
+    }
+
+    //Станции+
+    public void nextRadioStation() {
+        if (radioStation >= maxRadioStation - 1) {
+            radioStation = 0;
+            return;
+        }
+        setRadioStation(radioStation + 1);
+    }
+
+    public void prevRadioStation() {
+        if (radioStation <= 0) {
+            this.radioStation = maxRadioStation - 1;
+            return;
+        }
+        this.radioStation = radioStation - 1;
+    }
+    //--
+
+    //Громкость+
+    public void nextVolume() {
+        setRadioVolume(radioVolume + 1);
+    }
+
+    public void prevVolume() {
+        setRadioVolume(radioVolume - 1);
+    }
+    //--
 }

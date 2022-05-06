@@ -1,87 +1,99 @@
 package ru.netology.pervii;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-    //радиостанции
-    @Test
-    void theStationByRemoteControl() {
-        Radio radio = new Radio();
-        assertEquals(8, radio.theStationByRemoteControl(8));
+
+    //Станции+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From first station'; 6; 0; 0",
+                    "'Last station'; 15; 15; 0",
+                    "'More maximum station'; 5; 7; 0",
+                    "'Less minimum station'; 5; -1; 0"
+            }
+            , delimiter = ';'
+    )
+    void setRadioStationNumberTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(beginning);
+
+        assertEquals(expected, radio.getRadioStation());
     }
 
-    @Test
-    void theStationByRemoteControlIfNumberIsWrong() {
-        Radio radio = new Radio();
-        assertEquals(5, radio.theStationByRemoteControl(12));
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From first station'; 5; 0; 1",
+                    "'Go last station'; 5; 4; 0",
+                    "'More maximum station'; 0; 5; 0"
+            }
+            , delimiter = ';'
+    )
+    void NextRadioStationTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(beginning);
+
+        radio.nextRadioStation();
+        assertEquals(expected, radio.getRadioStation());
     }
 
-    @Test
-    void theStationByRemoteControlIfNumberIsWrongMinus() {
-        Radio radio = new Radio();
-        assertEquals(5, radio.theStationByRemoteControl(-1));
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'From last station'; 5; 5; 4",
+                    "'Go first station'; 5; 1; 0",
+                    "'Less minimum station'; 5; 0; 4"
+            }
+            , delimiter = ';'
+    )
+    void PrevRadioStationTest(String name, int max, int beginning, int expected) {
+        Radio radio=new Radio(max);
+        radio.setRadioStation(beginning);
+
+        radio.prevRadioStation();
+        assertEquals(expected, radio.getRadioStation());
+    }
+    //--
+
+    //Громкость++
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'Zero volume'; 0; 1",
+                    "'Go max volume'; 99; 100",
+                    "'More maximum volume'; 100; 100"
+            }
+            , delimiter = ';'
+    )
+    void pressPlusVolumeTest(String name, int start, int expected) {
+        Radio radio=new Radio();
+        radio.setRadioVolume(start);
+
+        radio.nextVolume();
+        assertEquals(expected, radio.getRadioVolume());
     }
 
-    @Test
-    void theStationByButtonNextIfCurrentIsNine() {
-        Radio radio = new Radio();
-        radio.setRadioStation(9);
-        radio.theStationByNextButton();
-        assertEquals(0, radio.getRadioStation());
-    }
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "'Max volume'; 100; 99",
+                    "'Go min volume'; 1; 0",
+                    "'Less minimum volume'; 0; 0"
+            }
+            , delimiter = ';'
+    )
+    void pressMinusVolumeTest(String name, int start, int expected) {
+        Radio radio=new Radio();
+        radio.setRadioVolume(start);
 
-    @Test
-    void theStationByButtonNext() {
-        Radio radio = new Radio();
-        radio.theStationByNextButton();
-        assertEquals(6, radio.getRadioStation());
+        radio.prevVolume();
+        assertEquals(expected, radio.getRadioVolume());
     }
-
-    @Test
-    void theStationByPrevButtonIfCurrentIsNull() {
-        Radio radio = new Radio();
-        radio.setRadioStation(0);
-        radio.theStationByPrevButton();
-        assertEquals(9, radio.getRadioStation());
-    }
-
-    @Test
-    void theStationByPrevButton() {
-        Radio radio = new Radio();
-        radio.theStationByPrevButton();
-        assertEquals(4, radio.getRadioStation());
-    }
-
-    //громкость
-
-    @Test
-    void increaseVolumeUnderMax() {
-        Radio radio = new Radio();
-        radio.increaseVolume();
-        assertEquals(6, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeAboveMax() {
-        Radio radio = new Radio();
-        radio.setRadioVolume(10);
-        radio.increaseVolume();
-        assertEquals(10, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeUnderMinimum() {
-        Radio radio = new Radio();
-        radio.decreaseVolume();
-        assertEquals(4, radio.getRadioVolume());
-    }
-
-    @Test
-    void increaseVolumeAboveMinimum() {
-        Radio radio = new Radio();
-        radio.setRadioVolume(0);
-        radio.decreaseVolume();
-        assertEquals(0, radio.getRadioVolume());
-    }
+    //--
 }
